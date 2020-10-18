@@ -13,14 +13,14 @@ import Inicio from './bienvenida/Inicio';
 import Products from './productos/Productos';
 import Users from './usuarios/Usuarios';
 import Logearse from './login/Login';
-import Firebase from './lib/firebase';
+import Registro from './registro/Registro';
 
 const Stack = createStackNavigator();
 
 const App: () => React$Node = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Logearse">
         <Stack.Screen
           name="Inicio"
           component={Inicio}
@@ -40,6 +40,11 @@ const App: () => React$Node = () => {
           name="Logearse"
           component={Logearse}
           options={{ title: 'PLEASE REGISTER' }}
+        />
+        <Stack.Screen
+          name="Registro"
+          component={Registro}
+          options={{title: 'Registro'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
