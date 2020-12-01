@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image } from 'react-native'
+import auth from '@react-native-firebase/auth';
 
 class Inputs2 extends Component {
    state = {
@@ -15,6 +16,23 @@ class Inputs2 extends Component {
    login = (email, pass) => {
       alert('Ingrese un correo electronico ' + ' y una contraseña')
    }
+
+   __doCreateUser = async () => {
+      try {
+        let response = await auth().createUserWithEmailAndPassword(
+          this.state.email,
+          this.state.password,
+        );
+        // console.log('creando usuario ', response);
+        if (response && response.user) {
+          Alert.alert('Éxito ✅', 'Cuenta creada satisfactoriamente');
+        }
+        navigation.navigate('Login');
+      } catch (e) {
+        console.error(e.message);
+      }
+    };
+
    render() {
       return (
          <View style = {styles.container}>
@@ -43,7 +61,7 @@ class Inputs2 extends Component {
             <TouchableOpacity
                style = {styles.submitButton}
                onPress = {
-                  () => this.login(this.state.email, this.state.password)
+                  () => this.__doCreateUser(this.state.email, this.state.password)
                }>
                <Text style = {styles.submitButtonText}> Registrarse </Text>
             </TouchableOpacity>
@@ -55,19 +73,18 @@ export default Inputs2
 
 const styles = StyleSheet.create({
    container: {
-       paddingTop: 10,
-       backgroundColor: 'white',
-       height: 380,
-       width: 300,
-       borderRadius: 5,
-       marginTop: 30,
-       marginBottom: 10,
-       alignItems: 'center',
-       justifyContent: 'center'
+      backgroundColor: 'white',
+      height: 360,
+      width: 260,
+      borderRadius: 5,
+      marginTop: 30,
+      marginBottom: 5,
+      alignItems: 'center',
+      justifyContent: 'center'
    },
    input: {
-       width: '90%',
-       margin: 15,
+       width: '80%',
+       margin: 10,
        height: 40,
        borderColor: 'lightgray',
        borderWidth: 1,
@@ -75,23 +92,16 @@ const styles = StyleSheet.create({
        borderRadius: 5
    },
    submitButton: {
-       width: '70%',
-       backgroundColor: '#84DBF9',
+       width: '60%',
+       backgroundColor: 'black',
        padding: 10,
-       margin: 15,
+       marginTop: 30,
        height: 40,
        alignItems: 'center',
        borderRadius: 50
    },
    submitButtonText:{
        color: 'white'
-   },
-   forgot: {
-        margin: 10,
-        borderColor: 'black'
-   },
-   forgotText: {
-       color: 'lightblue'
    },
    icono: {
       width: 40,
